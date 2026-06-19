@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fatimah Barnawi | Cross-Cultural AI Ethics & Law</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root {
+  --teal:    #2d6a5f;
+  --teal-lt: #3d8a7a;
+  --ink:     #1a1f2e;
+  --muted:   #6b7280;
+  --border:  rgba(0,0,0,0.07);
+  --white:   #ffffff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter','Cairo',sans-serif;
+  color: var(--ink);
+  line-height: 1.75;
+  /* MTT-style dark background */
+  background: #f7f8fa;
+  min-height: 100vh;
+}
+
+/* ── FLOATING PILL NAV ── */
+.topbar {
+  position: fixed;
+  top: 16px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 50px;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.topbar a {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 11px;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 0.76rem; font-weight: 500;
+  border-radius: 30px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.topbar a:hover { color: #2d6a5f; background: rgba(45,106,95,0.07); }
+.topbar a.active { color: #2d6a5f; background: rgba(45,106,95,0.1); font-weight: 600; }
+
+.topbar-divider { width:1px; height:16px; background:rgba(0,0,0,0.1); margin:0 4px; }
+
+.lang-btn {
+  background: #2d6a5f;
+  color: #fff; border: none;
+  padding: 6px 14px; border-radius: 30px;
+  cursor: pointer; font-size: 0.76rem; font-weight: 600;
+  font-family: inherit; display:flex; align-items:center; gap:6px;
+  transition: background 0.2s; margin-left: 6px;
+}
+.lang-btn:hover { background: #3d8a7a; }
+
+/* ── PAGE ── */
+.page { max-width: 840px; margin: 0 auto; padding: 96px 20px 80px; }
+
+/* ── HERO ── */
+.hero {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 24px;
+  padding: 48px 52px;
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-family: 'DM Serif Display','Cairo',serif;
+  font-size: 3.2rem;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #2d6a5f 0%, #3d8aaa 35%, #6a3d9b 65%, #9b3d6a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero .role {
+  font-size: 0.82rem; color: #6b7280;
+  font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; margin-bottom: 22px;
+}
+
+.hero-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(45,106,95,0.2), rgba(106,61,155,0.15), transparent);
+  margin-bottom: 22px;
+}
+
+.hero-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.hero-tag {
+  display:inline-flex; align-items:center; gap:6px;
+  background: rgba(45,106,95,0.06);
+  border: 1px solid rgba(0,0,0,0.08);
+  color: #374151;
+  padding: 5px 14px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 500;
+}
+
+/* ── SECTION WRAPPERS — each with its own gradient background ── */
+.section-wrap {
+  border-radius: 24px;
+  padding: 3px;
+  margin-bottom: 14px;
+}
+
+/* Gradient backgrounds per section — pastel on dark */
+#w-statement   { background: linear-gradient(135deg, #edf7f2, #e8f4f0); }
+#w-interests   { background: linear-gradient(135deg, #e8f7f2, #edf7e8); }
+#w-projects    { background: linear-gradient(135deg, #fdf0f5, #f5eeff); }
+#w-education   { background: linear-gradient(135deg, #eef4fd, #e8f5fd); }
+#w-publications{ background: linear-gradient(135deg, #fdf8ee, #f5fde8); }
+#w-conferences { background: linear-gradient(135deg, #f5eeff, #fdeef8); }
+#w-policy      { background: linear-gradient(135deg, #fdf3e8, #fdfae8); }
+#w-experience  { background: linear-gradient(135deg, #fdeef0, #f5eeff); }
+#w-awards      { background: linear-gradient(135deg, #edfdf3, #e8fdf8); }
+
+/* ── CARD (white-ish inner) ── */
+.card {
+  background: rgba(255,255,255,0.88);
+  border-radius: 22px;
+  padding: 40px 44px;
+}
+
+/* ── SECTION TITLE with gradient text matching section color ── */
+.section-title {
+  font-family: 'DM Serif Display','Cairo',serif;
+  font-size: 1.6rem; font-weight: 400;
+  margin-bottom: 24px;
+  display:flex; align-items:center; gap:12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+/* Each section title gets its own gradient */
+#w-statement   .section-title { background: linear-gradient(90deg,#2d6a5f,#56c0a0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+#w-interests   .section-title { background: linear-gradient(90deg,#2d8a60,#6ddaa0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+#w-projects    .section-title { background: linear-gradient(90deg,#9b3d6a,#e88ab0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+#w-education   .section-title { background: linear-gradient(90deg,#2d5fa0,#6ab0e8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+#w-publications .section-title{ background: linear-gradient(90deg,#8a6a20,#d4aa50); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+#w-conferences .section-title { background: linear-gradient(90deg,#6a3d9b,#b08ae8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+#w-policy      .section-title { background: linear-gradient(90deg,#9b5a20,#e8a050); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+#w-experience  .section-title { background: linear-gradient(90deg,#9b2d2d,#e87070); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+#w-awards      .section-title { background: linear-gradient(90deg,#2d7a50,#70d4a0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+.title-icon {
+  width:34px; height:34px; border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+#w-statement   .title-icon { background:rgba(45,106,95,0.12); color:#2d6a5f; }
+#w-interests   .title-icon { background:rgba(45,138,96,0.12); color:#2d8a60; }
+#w-projects    .title-icon { background:rgba(155,61,106,0.12); color:#9b3d6a; }
+#w-education   .title-icon { background:rgba(45,95,160,0.12); color:#2d5fa0; }
+#w-publications .title-icon{ background:rgba(138,106,32,0.12); color:#8a6a20; }
+#w-conferences .title-icon { background:rgba(106,61,155,0.12); color:#6a3d9b; }
+#w-policy      .title-icon { background:rgba(155,90,32,0.12); color:#9b5a20; }
+#w-experience  .title-icon { background:rgba(155,45,45,0.12); color:#9b2d2d; }
+#w-awards      .title-icon { background:rgba(45,122,80,0.12); color:#2d7a50; }
+
+/* ── TYPOGRAPHY ── */
+p { font-size:0.95rem; color:#374151; margin-bottom:14px; line-height:1.8; }
+p:last-child { margin-bottom:0; }
+ul { list-style:none; }
+li { font-size:0.95rem; margin-bottom:11px; display:flex; align-items:flex-start; gap:10px; color:#374151; line-height:1.7; }
+li::before { content:"◆"; font-size:0.42rem; margin-top:10px; flex-shrink:0; }
+#w-statement li::before   { color:#2d6a5f; }
+#w-interests li::before   { color:#2d8a60; }
+
+/* ── ITEMS ── */
+.item-block { padding:20px 0; border-bottom:1px solid rgba(0,0,0,0.06); }
+.item-block:last-child { border-bottom:none; padding-bottom:0; }
+.item-block:first-child { padding-top:0; }
+.item-header { display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-bottom:5px; }
+.item-title { font-size:1rem; font-weight:600; color:var(--ink); line-height:1.4; }
+.item-date { font-size:0.79rem; color:var(--muted); font-weight:500; white-space:nowrap; padding-top:3px; }
+.item-sub { font-size:0.84rem; font-weight:500; margin-bottom:6px; }
+#w-education .item-sub   { color:#2d5fa0; }
+#w-experience .item-sub  { color:#9b2d2d; }
+.item-sub:not([class])   { color:var(--teal-lt); }
+.item-desc { font-size:0.88rem; color:#4b5563; font-style:italic; margin-top:7px; line-height:1.75; }
+
+.conf-title { font-size:0.95rem; font-weight:600; color:var(--ink); margin-bottom:3px; line-height:1.5; }
+.conf-meta  { font-size:0.8rem; font-weight:500; margin-bottom:5px; }
+#w-conferences .conf-meta { color:#6a3d9b; }
+
+.tag {
+  display:inline-block; padding:2px 9px; border-radius:6px;
+  font-size:0.73rem; font-weight:600; margin-left:7px;
+}
+#w-education .tag { background:rgba(45,95,160,0.1); color:#2d5fa0; }
+#w-experience .tag { background:rgba(155,45,45,0.1); color:#9b2d2d; }
+
+.badge-policy {
+  display:inline-flex; align-items:center; gap:6px;
+  background:#fef3c7; color:#92400e;
+  padding:4px 12px; border-radius:20px;
+  font-size:0.79rem; font-weight:600; margin-top:8px;
+}
+
+.links-wrapper { display:flex; gap:14px; margin-top:10px; flex-wrap:wrap; }
+.action-link {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:0.85rem; font-weight:600; text-decoration:none;
+  border-bottom:1px solid; padding-bottom:1px; transition:opacity 0.2s;
+}
+#w-projects .action-link { color:#9b3d6a; border-color:rgba(155,61,106,0.3); }
+.action-link:hover { opacity:0.6; }
+
+.award-item {
+  display:flex; gap:14px; padding:16px 0;
+  border-bottom:1px solid rgba(0,0,0,0.05); align-items:flex-start;
+  transition:transform 0.2s;
+}
+.award-item:hover { transform:translateX(4px); }
+.award-item:last-child { border-bottom:none; padding-bottom:0; }
+.award-item:first-child { padding-top:0; }
+.award-icon { width:34px; height:34px; background:rgba(45,122,80,0.1); border-radius:9px; display:flex; align-items:center; justify-content:center; color:#2d7a50; flex-shrink:0; }
+.award-title { font-size:0.93rem; font-weight:600; color:var(--ink); margin-bottom:2px; }
+.award-desc  { font-size:0.84rem; color:var(--muted); }
+
+/* ── LANGUAGE TOGGLE — explicit and unambiguous ── */
+.lang-en, .lang-ar { display: none !important; }
+
+[lang="en"] .lang-en { display: revert !important; }
+[lang="ar"] .lang-ar { display: revert !important; }
+
+[lang="en"] span.lang-en,
+[lang="en"] a.lang-en,
+[lang="en"] strong.lang-en,
+[lang="en"] em.lang-en { display: inline !important; }
+
+[lang="ar"] span.lang-ar,
+[lang="ar"] a.lang-ar,
+[lang="ar"] strong.lang-ar,
+[lang="ar"] em.lang-ar { display: inline !important; }
+
+[lang="en"] li.lang-en { display: flex !important; }
+[lang="ar"] li.lang-ar { display: flex !important; }
+
+[lang="en"] div.item-sub.lang-en,
+[lang="en"] div.conf-title.lang-en,
+[lang="en"] div.conf-meta.lang-en,
+[lang="en"] div.award-title.lang-en,
+[lang="en"] div.award-desc.lang-en { display: block !important; }
+
+[lang="ar"] div.item-sub.lang-ar,
+[lang="ar"] div.conf-title.lang-ar,
+[lang="ar"] div.conf-meta.lang-ar,
+[lang="ar"] div.award-title.lang-ar,
+[lang="ar"] div.award-desc.lang-ar { display: block !important; }
+
+[dir="rtl"] .topbar { flex-direction:row-reverse; }
+[dir="rtl"] .lang-btn { margin-left:0; margin-right:6px; }
+[dir="rtl"] .tag { margin-left:0; margin-right:7px; }
+[dir="rtl"] .award-item:hover { transform:translateX(-4px); }
+
+@media (max-width:700px) {
+  .topbar a span { display:none; }
+  .topbar { padding:8px 12px; gap:2px; }
+  .topbar a { padding:6px 8px; }
+  .page { padding:80px 12px 60px; }
+  .hero { padding:28px 24px; }
+  .hero h1 { font-size:2.2rem; }
+  .card { padding:24px 20px; }
+}
+</style>
+</head>
+
+<body lang="en" dir="ltr">
+
+<!-- ══ FLOATING NAV ══ -->
+<nav class="topbar">
+  <a href="#w-statement"    onclick="s(event,'w-statement')">   <i data-lucide="book-open" size="13"></i>    <span class="lang-en">Statement</span><span class="lang-ar">البيان</span></a>
+  <a href="#w-interests"    onclick="s(event,'w-interests')">   <i data-lucide="target" size="13"></i>        <span class="lang-en">Interests</span><span class="lang-ar">الاهتمامات</span></a>
+  <a href="#w-projects"     onclick="s(event,'w-projects')">    <i data-lucide="layout-grid" size="13"></i>   <span class="lang-en">Projects</span><span class="lang-ar">المشاريع</span></a>
+  <a href="#w-education"    onclick="s(event,'w-education')">   <i data-lucide="graduation-cap" size="13"></i><span class="lang-en">Education</span><span class="lang-ar">التعليم</span></a>
+  <a href="#w-publications" onclick="s(event,'w-publications')"><i data-lucide="file-text" size="13"></i>    <span class="lang-en">Publications</span><span class="lang-ar">المنشورات</span></a>
+  <a href="#w-conferences"  onclick="s(event,'w-conferences')"> <i data-lucide="mic" size="13"></i>           <span class="lang-en">Conferences</span><span class="lang-ar">المؤتمرات</span></a>
+  <a href="#w-policy"       onclick="s(event,'w-policy')">      <i data-lucide="landmark" size="13"></i>      <span class="lang-en">Policy</span><span class="lang-ar">السياسات</span></a>
+  <a href="#w-experience"   onclick="s(event,'w-experience')">  <i data-lucide="briefcase" size="13"></i>     <span class="lang-en">Experience</span><span class="lang-ar">الخبرات</span></a>
+  <a href="#w-awards"       onclick="s(event,'w-awards')">      <i data-lucide="award" size="13"></i>         <span class="lang-en">Awards</span><span class="lang-ar">الجوائز</span></a>
+  <div class="topbar-divider"></div>
+  <button class="lang-btn" onclick="toggleLang()"><i data-lucide="languages" size="13"></i><span class="lang-en">ع</span><span class="lang-ar">EN</span></button>
+</nav>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero" style="margin-bottom:16px;">
+  <h1 class="lang-en">Fatimah<br>Barnawi</h1>
+  <h1 class="lang-ar">فاطمة<br>برناوي</h1>
+  <div class="role lang-en">Doctoral Researcher · Law & Cross-Cultural AI Ethics · University of York</div>
+  <div class="role lang-ar">باحثة دكتوراه · القانون وأخلاقيات الذكاء الاصطناعي عبر الثقافات · جامعة يورك</div>
+  <div class="hero-divider"></div>
+  <div class="hero-tags">
+    <span class="hero-tag"><i data-lucide="globe" size="12"></i><span class="lang-en">Comparative Jurisdictions</span><span class="lang-ar">دول مقارنة متعددة</span></span>
+    <span class="hero-tag"><i data-lucide="scale" size="12"></i><span class="lang-en">Islamic AI Ethics</span><span class="lang-ar">أخلاقيات الذكاء الاصطناعي الإسلامية</span></span>
+    <span class="hero-tag"><i data-lucide="search" size="12"></i><span class="lang-en">Critical Realism</span><span class="lang-ar">الواقعية النقدية</span></span>
+    <span class="hero-tag"><i data-lucide="code" size="12"></i><span class="lang-en">LLM Auditing</span><span class="lang-ar">تدقيق النماذج اللغوية</span></span>
+  </div>
+</div>
+
+<!-- 1 STATEMENT -->
+<div id="w-statement" class="section-wrap">
+<div class="card">
+  <h2 class="section-title"><span class="title-icon"><i data-lucide="book-open" size="17"></i></span><span class="lang-en">Research Statement</span><span class="lang-ar">بيان الغرض البحثي</span></h2>
+  <div class="lang-en">
+    <p>My research sits at the intersection of law, technology, and philosophy. I investigate how AI adoption in judicial systems shapes outcomes across culturally and institutionally diverse legal traditions. Grounded in Critical Realist philosophy and informed by feminist epistemology, my work uncovers the causal mechanisms, structural power dynamics, and Western-centric biases embedded in foundational AI models, with particular focus on decoding the impact on non-Western jurisprudential traditions.</p>
+    <p>My doctoral framework applies a macro-level and micro comparative legal methodology across international jurisdictions, mapping systemic variances in courtroom automation, automated translation, and algorithmic mediation. At the empirical level, I build specialised evaluation benchmarks, most notably CJCHD-Bench (2026), to audit how large language models exhibit cultural and legal hallucinations when confronted with Islamic jurisprudence and regional legal codes. A distinctive thread in my work is the argument that international AI ethics frameworks (UNESCO 2021, EU AI Act) can benefit from the Islamic values' substantively different governance architecture that the global conversation on AI ethics has not yet engaged with.</p>
+  </div>
+  <div class="lang-ar">
+    <p>يقع بحثي في نقطة التقاطع بين القانون والتقنية والفلسفة. أتقصى كيف يشكّل اعتماد الذكاء الاصطناعي في الأنظمة القضائية مخرجاته عبر تقاليد قانونية متنوعة مؤسسياً وثقافياً. تأسيساً على الواقعية النقدية واسترشاداً بالإبستمولوجيا النسوية، يكشف بحثي الآليات السببية وديناميكيات القوة الهيكلية والانحيازات الغربية الكامنة في نماذج الذكاء الاصطناعي التأسيسية، مع تركيز خاص على فهم أثرها على التقاليد الفقهية غير الغربية.</p>
+    <p>يطبق إطاري البحثي منهجية قانونية مقارنة على المستويين الكلي والجزئي عبر أنظمة قضائية دولية متعددة، لرصد التباينات النظامية في أتمتة المحاكم والترجمة الآلية والوساطة الخوارزمية. على المستوى التطبيقي، أبني مؤشرات تقييم متخصصة، أبرزها CJCHD-Bench (2026)، لتدقيق كيفية إنتاج النماذج اللغوية الكبيرة لهلوسات ثقافية وقانونية عند مواجهتها بالفقه الإسلامي والأنظمة القانونية الإقليمية. والمحور الجوهري في عملي هو المحاججة بأن أطر أخلاقيات الذكاء الاصطناعي الدولية يمكن أن تستفيد من البنية الحوكمية المغايرة جوهرياً التي تقدمها القيم الإسلامية، والتي لم يلتفت إليها النقاش العالمي بعد.</p>
+  </div>
+</div>
+</div>
+
+<!-- 2 INTERESTS -->
+<div id="w-interests" class="section-wrap">
+<div class="card">
+  <h2 class="section-title"><span class="title-icon"><i data-lucide="target" size="17"></i></span><span class="lang-en">Research Interests</span><span class="lang-ar">الاهتمامات البحثية</span></h2>
+  <ul class="lang-en">
+    <li>Cross-Cultural & Pluralistic Normative Frameworks in AI Governance</li>
+    <li>Cultural, Linguistic, and Legal Bias Auditing in Large Language Models</li>
+    <li>Applied Critical Realism & Retroductive Methodology in Socio-Legal Research</li>
+    <li>Comparative Algorithmic Governance across Diverse Jurisdictions</li>
+    <li>Islamic Philosophy and AI Ethics</li>
+    <li>Procedural Justice, Language Access, and Algorithmic Mediation in Courts</li>
+  </ul>
+  <ul class="lang-ar">
+    <li>الأطر المعيارية التعددية وعبر الثقافات في حوكمة الذكاء الاصطناعي</li>
+    <li>تدقيق الانحيازات الثقافية واللغوية والقانونية في النماذج اللغوية الكبيرة</li>
+    <li>الواقعية النقدية التطبيقية والمنهجية التراجعية في البحوث القانونية الاجتماعية</li>
+    <li>الحوكمة الخوارزمية المقارنة عبر الأنظمة القضائية المتنوعة</li>
+    <li>الفلسفة الإسلامية وأخلاقيات الذكاء الاصطناعي</li>
+    <li>العدالة الإجرائية وتيسير الوصول اللغوي والوساطة الخوارزمية في المحاكم</li>
+  </ul>
+</div>
+</div>
+
+<!-- 3 PROJECTS -->
+<div id="w-projects" class="section-wrap">
+<div class="card">
+  <h2 class="section-title"><span class="title-icon"><i data-lucide="layout-grid" size="17"></i></span><span class="lang-en">Digital Projects & Innovations</span><span class="lang-ar">المشاريع الرقمية والابتكارات</span></h2>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">CJCHD-Bench — Contextual Justice & Cultural Hallucination Dataset</span>
+      <span class="item-title lang-ar">مؤشر CJCHD-Bench للعدالة السياقية والهلوسة الثقافية</span>
+      <span class="item-date">2026</span>
+    </div>
+    <p class="item-desc lang-en">Behavioural benchmark evaluating cultural, linguistic, and legal biases in LLMs within Islamic and Saudi legal contexts. 300 scenarios across 5 legal domains. Developed as part of the ICAIRE AI Glossary Challenge 2026.</p>
+    <p class="item-desc lang-ar">مؤشر سلوكي لتقييم الانحيازات الثقافية واللغوية والقانونية في النماذج اللغوية ضمن السياقات القانونية الإسلامية والسعودية عبر 300 سيناريو في 5 مجالات.</p>
+  </div>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">Judicial AI Evaluation Tool</span>
+      <span class="item-title lang-ar">أداة تقييم الذكاء الاصطناعي القضائي الدولي</span>
+      <span class="item-date">2026</span>
+    </div>
+    <p class="item-desc lang-en">Interactive web platform operationalising the MCDA comparative framework across multiple jurisdictions.</p>
+    <p class="item-desc lang-ar">منصة تفاعلية لتطبيق الإطار المقارن متعدد المعايير عبر أنظمة قضائية متعددة.</p>
+    <div class="links-wrapper"><a href="https://fatimbar.github.io" class="action-link" target="_blank"><i data-lucide="external-link" size="13"></i><span class="lang-en">Live Platform</span><span class="lang-ar">زيارة المنصة</span></a></div>
+  </div>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">MyPhD Conceptual Framework Map</span>
+      <span class="item-title lang-ar">خريطة الإطار المفاهيمي للدكتوراه</span>
+      <span class="item-date">2026</span>
+    </div>
+    <p class="item-desc lang-en">Interactive visualisation of the multilayered doctoral methodological frameworks.</p>
+    <p class="item-desc lang-ar">خرائط مرئية تفاعلية تشرح الإطار المفاهيمي للدكتوراه.</p>
+    <div class="links-wrapper"><a href="https://fatimbar.github.io/MyPhD/" class="action-link" target="_blank"><i data-lucide="map" size="13"></i><span class="lang-en">View Map</span><span class="lang-ar">فتح الخريطة</span></a></div>
+  </div>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">The Judge's Dilemma</span>
+      <span class="item-title lang-ar">معضلة القاضي</span>
+      <span class="item-date">2026</span>
+    </div>
+    <p class="item-desc lang-en">Interactive decision game translating algorithmic ethics and cross-cultural bias for policy and public audiences.</p>
+    <p class="item-desc lang-ar">لعبة قرار تفاعلية تترجم أخلاقيات الخوارزميات والتحيز عبر الثقافات للجمهور العام وصانعي السياسات.</p>
+  </div>
+</div>
+</div>
+
+<!-- 4 EDUCATION -->
+<div id="w-education" class="section-wrap">
+<div class="card">
+  <h2 class="section-title"><span class="title-icon"><i data-lucide="graduation-cap" size="17"></i></span><span class="lang-en">Education</span><span class="lang-ar">التعليم الأكاديمي</span></h2>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">PhD in Law</span>
+      <span class="item-title lang-ar">الدكتوراه في القانون</span>
+      <span class="item-date">2025 – 2028</span>
+    </div>
+    <div class="item-sub lang-en">University of York, UK</div>
+    <div class="item-sub lang-ar">جامعة يورك، المملكة المتحدة</div>
+    <p class="item-desc lang-en">Developing an integrated MCDA evaluation framework for AI adoption in civil justice systems across multiple jurisdictions, combining Critical Realism, retroductive logic, and a Two-Tier analytical structure.</p>
+    <p class="item-desc lang-ar">تطوير إطار تقييم متكامل متعدد المعايير لاعتماد الذكاء الاصطناعي عبر أنظمة قضائية متعددة، يجمع الواقعية النقدية والمنطق التراجعي وبنية تحليلية ثنائية الطبقات.</p>
+  </div>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">LLM in Technology, Innovation, and the Law</span>
+      <span class="item-title lang-ar">الماجستير في التقنية والابتكار والقانون</span>
+      <span class="item-date">2020 – 2021</span>
+    </div>
+    <div class="item-sub lang-en">University of Edinburgh, UK <span class="tag">With Merit</span></div>
+    <div class="item-sub lang-ar">جامعة إدنبرة، المملكة المتحدة <span class="tag">مع مرتبة الشرف</span></div>
+    <p class="item-desc lang-en">Dissertation: <em>Can Traditional Sharia Law Jurisprudence Address the Civil Liability Challenge Posed by Autonomous Vehicles?</em> Distinction in Legal Technology and the Justice System.</p>
+  </div>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">Bachelor of Law (LLB)</span>
+      <span class="item-title lang-ar">بكالوريوس في الأنظمة (القانون)</span>
+      <span class="item-date">2012 – 2016</span>
+    </div>
+    <div class="item-sub lang-en">Umm Al-Qura University, KSA <span class="tag">First Class Honours · GPA 3.87</span></div>
+    <div class="item-sub lang-ar">جامعة أم القرى، كلية الدراسات القضائية والأنظمة <span class="tag">مرتبة الشرف الأولى</span></div>
+    <p class="item-desc lang-en">Deep training in Islamic Law, Jurisprudence (الفقه وأصوله), and classical Sharia text analysis alongside Saudi statutory and commercial law.</p>
+    <p class="item-desc lang-ar">تدريب معمّق في الشريعة الإسلامية والفقه وأصوله وتحليل النصوص الشرعية الكلاسيكية، إلى جانب الأنظمة السعودية والقانون التجاري.</p>
+  </div>
+</div>
+</div>
+
+<!-- 5 PUBLICATIONS -->
+<div id="w-publications" class="section-wrap">
+<div class="card">
+  <h2 class="section-title"><span class="title-icon"><i data-lucide="file-text" size="17"></i></span><span class="lang-en">Peer-Reviewed Publications</span><span class="lang-ar">المنشورات المحكّمة</span></h2>
+  <div class="item-block">
+    <p class="lang-en"><strong>Barnawi, F.</strong> (2025). "Judicial Decision-Making: A Comprehensive Analysis of Factors, Constraints, and Theoretical Frameworks." <em>AJSRP Journal,</em> Vol. 9. DOI: 10.26389/AJSRP.240225B</p>
+    <p class="item-desc lang-en">Examines extra-legal and socio-contextual factors shaping human judicial discretion — baseline for evaluating how automated tools alter reasoning structures.</p>
+    <p class="lang-ar"><strong>برناوي، ف.</strong> (2025). "صنع القرار القضائي." <em>مجلة AJSRP،</em> المجلد 9.</p>
+  </div>
+  <div class="item-block">
+    <p class="lang-en"><strong>Barnawi, F.</strong> (2023). "Universal Service Obligation." <em>AJRSP Journal.</em> DOI: 10.52132/Ajrsp.e.2023.53.2</p>
+    <p class="item-desc lang-en">Comparative policy analysis of digital infrastructure regulation and universal internet access between the UK and Saudi Arabia.</p>
+    <p class="lang-ar"><strong>برناوي، ف.</strong> (2023). "الالتزام بالخدمة الشاملة." <em>مجلة AJRSP.</em></p>
+  </div>
+</div>
+</div>
+
+<!-- 6 CONFERENCES -->
+<div id="w-conferences" class="section-wrap">
+<div class="card">
+  <h2 class="section-title"><span class="title-icon"><i data-lucide="mic" size="17"></i></span><span class="lang-en">Conference Presentations</span><span class="lang-ar">عروض المؤتمرات</span></h2>
+  <div class="item-block">
+    <div class="conf-title lang-en">"Digital Hisbah as a Framework for Correcting Value Bias in AI Governance: A Foundational Comparative Study with International Frameworks"</div>
+    <div class="conf-meta lang-en">Imam Muhammad ibn Saud Islamic University, Riyadh · September 29–30, 2026 · <em>Abstract accepted; full paper due August 2026</em></div>
+    <p class="item-desc lang-en">Proposes Islamic jurisprudential Hisbah as a three-layer governance mechanism — data, design, and institutional oversight — for correcting value bias in AI systems, culminating in a proposed Digital Hisbah Authority.</p>
+    <div class="conf-title lang-ar">"الحسبة الرقمية كإطار لتصحيح انحياز القيم في حوكمة أنظمة الذكاء الاصطناعي: دراسة تأصيلية مقارنة بالأطر الدولية"</div>
+    <div class="conf-meta lang-ar" style="color:#6a3d9b;">جامعة الإمام محمد بن سعود الإسلامية، الرياض · 29–30 سبتمبر 2026 · <em>قُبل الملخص، والورقة الكاملة مستحقة في أغسطس 2026</em></div>
+    <p class="item-desc lang-ar">تقترح الحسبة الفقهية الإسلامية كآلية حوكمية ثلاثية الطبقات — البيانات، والتصميم، والرقابة المؤسسية — لتصحيح انحياز القيم في أنظمة الذكاء الاصطناعي، وتخلص إلى اقتراح هيئة حسبة رقمية.</p>
+  </div>
+  <div class="item-block">
+    <div class="conf-title lang-en">"Bridging the Justice Gap? Evaluating AI Court Translation as a Tool for Challenging Inequality"</div>
+    <div class="conf-meta lang-en">Forms of Power · White Rose Doctoral Training Partnership · June 2026</div>
+    <p class="item-desc lang-en">Examines AI court translation as a procedural justice intervention, interrogating whether language access technology challenges or reproduces structural inequality.</p>
+    <div class="conf-title lang-ar">"سدّ فجوة العدالة؟ تقييم ترجمة المحاكم بالذكاء الاصطناعي كأداة لتحدي عدم المساواة"</div>
+    <div class="conf-meta lang-ar" style="color:#6a3d9b;">أشكال القوة · الشراكة التدريبية وايت روز · يونيو 2026</div>
+  </div>
+  <div class="item-block">
+    <div class="conf-title lang-en">"AI Judicial Translation: Lessons from Singapore and the UAE for a Saudi Model"</div>
+    <div class="conf-meta lang-en">Language Intelligence: AI for Translation, Culture & Identity · Saudi Cultural Attaché, London · April 2026</div>
+    <p class="item-desc lang-en">Comparative analysis of Singapore's iCTS/Harvey AI and UAE's Bayan AI as reference models for a Saudi judicial translation framework sensitive to Sharia terminology.</p>
+    <div class="conf-title lang-ar">"الترجمة القضائية بالذكاء الاصطناعي: دروس من سنغافورة والإمارات نحو نموذج سعودي"</div>
+    <div class="conf-meta lang-ar" style="color:#6a3d9b;">الذكاء اللغوي · الملحقية الثقافية السعودية، لندن · أبريل 2026</div>
+  </div>
+  <div class="item-block">
+    <div class="conf-title lang-en">"Whose Algorithm? Design Philosophy in Judicial AI Systems Through a Feminist Epistemological Lens"</div>
+    <div class="conf-meta lang-en">Ways of Feminist Knowing · University of York · March 2026</div>
+    <p class="item-desc lang-en">Applies Harding's strong objectivity and Collins's intersectionality to compare COMPAS and AymurAI, arguing that design philosophy determines whose knowledge is centred in judicial AI.</p>
+    <div class="conf-title lang-ar">"خوارزمية من؟ فلسفة التصميم في أنظمة الذكاء الاصطناعي القضائية عبر عدسة إبستمولوجية نسوية"</div>
+    <div class="conf-meta lang-ar" style="color:#6a3d9b;">طرق المعرفة النسوية · جامعة يورك · مارس 2026</div>
+  </div>
+  <div class="item-block">
+    <div class="conf-title lang-en">"Philosophical Interaction in Generative AI: Intellectual Dominance and Hidden Biases through the Question of Collectivism and Individualism"</div>
+    <div class="conf-meta lang-en">Riyadh International Conference of Philosophy · December 2025 · <em>Peer-reviewed full paper</em></div>
+    <p class="item-desc lang-en">Argues that generative AI encodes liberal individualist epistemology, systematically marginalising collectivist philosophical traditions including Islamic thought.</p>
+    <div class="conf-title lang-ar">"التفاعل الفلسفي في الذكاء الاصطناعي التوليدي: الهيمنة الفكرية والتحيزات الخفية"</div>
+    <div class="conf-meta lang-ar" style="color:#6a3d9b;">المؤتمر الدولي للفلسفة بالرياض · ديسمبر 2025 · ورقة بحثية كاملة محكّمة</div>
+  </div>
+  <div class="item-block">
+    <div class="conf-title lang-en">"The Question of Human Existence in the Light of Artificial Intelligence"</div>
+    <div class="conf-meta lang-en">Saudi Philosophical Society Seminar · 2023</div>
+    <div class="conf-title lang-ar">"سؤال الوجود الإنساني في ضوء الذكاء الاصطناعي"</div>
+    <div class="conf-meta lang-ar" style="color:#6a3d9b;">ندوة الجمعية الفلسفية السعودية · 2023</div>
+  </div>
+</div>
+</div>
+
+<!-- 7 POLICY -->
+<div id="w-policy" class="section-wrap">
+<div class="card">
+  <h2 class="section-title"><span class="title-icon"><i data-lucide="landmark" size="17"></i></span><span class="lang-en">Policy Engagement & Knowledge Transfer</span><span class="lang-ar">المشاركة في السياسات ونقل المعرفة</span></h2>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">Policy Brief: AI-Powered Translation in Saudi Judicial Proceedings</span>
+      <span class="item-title lang-ar">ورقة سياسات: الترجمة بالذكاء الاصطناعي في الإجراءات القضائية السعودية</span>
+      <span class="item-date">2025</span>
+    </div>
+    <p class="item-desc lang-en">Submitted to the Director of the Unified Translation Centre, Saudi Ministry of Justice. Proposed a framework for AI integration in court translation services. Received substantive feedback and currently under development.</p>
+    <p class="item-desc lang-ar">مُقدَّمة إلى مدير مركز الترجمة الموحّد بوزارة العدل السعودية. قيد التطوير بناءً على تغذية راجعة مفصّلة.</p>
+    <div><span class="badge-policy"><i data-lucide="landmark" size="12"></i><span class="lang-en">Ministry of Justice · Saudi Arabia</span><span class="lang-ar">وزارة العدل · المملكة العربية السعودية</span></span></div>
+  </div>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">Professional Training: "The Legal Practitioner's Guide to Artificial Intelligence"</span>
+      <span class="item-title lang-ar">دورة تدريبية: دليل القانوني الممارس في الذكاء الاصطناعي</span>
+      <span class="item-date">2026</span>
+    </div>
+    <p class="item-desc lang-en">Designed and delivered a 50-minute interactive course for <strong>250+ legal practitioners</strong> on AI tools, professional liability, and ethical boundaries under Saudi regulations.</p>
+    <p class="item-desc lang-ar">تصميم وتقديم دورة تفاعلية لـ<strong>أكثر من 250 ممارساً قانونياً</strong> حول أدوات الذكاء الاصطناعي والمسؤولية المهنية وفق الأنظمة السعودية.</p>
+  </div>
+</div>
+</div>
+
+<!-- 8 EXPERIENCE -->
+<div id="w-experience" class="section-wrap">
+<div class="card">
+  <h2 class="section-title"><span class="title-icon"><i data-lucide="briefcase" size="17"></i></span><span class="lang-en">Academic & Professional Experience</span><span class="lang-ar">الخبرات الأكاديمية والمهنية</span></h2>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">Faculty Member — School of Law</span>
+      <span class="item-title lang-ar">عضو هيئة تدريس — كلية الأنظمة</span>
+      <span class="item-date">2022 – Present</span>
+    </div>
+    <div class="item-sub lang-en" style="color:#9b2d2d;">King Khalid University, KSA <span class="tag" style="background:rgba(155,45,45,0.1);color:#9b2d2d;">On academic leave</span></div>
+    <div class="item-sub lang-ar" style="color:#9b2d2d;">جامعة الملك خالد، المملكة العربية السعودية <span class="tag" style="background:rgba(155,45,45,0.1);color:#9b2d2d;">إجازة دراسية</span></div>
+    <p class="item-desc lang-en">Taught Contract Law, Tort Law, International Law, Commercial Papers, and Intellectual Property Law at undergraduate level.</p>
+    <p class="item-desc lang-ar">قامت بتدريس مقررات قانون العقود، والمسؤولية التقصيرية، والقانون الدولي، والأوراق التجارية، والملكية الفكرية على مستوى البكالوريوس.</p>
+  </div>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">Research Methods & Skills Mapping Assistant</span>
+      <span class="item-title lang-ar">مساعد رصد مناهج وخرائط مهارات البحث العلمي</span>
+      <span class="item-date">2025 – 2026</span>
+    </div>
+    <div class="item-sub lang-en" style="color:#9b2d2d;">University of York, Faculty of Social Sciences</div>
+    <div class="item-sub lang-ar" style="color:#9b2d2d;">جامعة يورك، كلية العلوم الاجتماعية</div>
+    <p class="item-desc lang-en">Mapping and analysis of research methods and skills provision across FSS departments to support institutional curriculum development.</p>
+    <p class="item-desc lang-ar">رصد وتحليل مناهج البحث والمهارات المُقدَّمة عبر أقسام كلية العلوم الاجتماعية لدعم تطوير المناهج المؤسسية.</p>
+  </div>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">Legal Practice</span>
+      <span class="item-title lang-ar">الممارسة القانونية والمحاماة</span>
+      <span class="item-date">2016 – 2022</span>
+    </div>
+    <p class="item-desc lang-en"><strong>Lawyer</strong> — Afaq Aladalah Law Firm (2020–2022) · civil and commercial litigation.<br><br><strong>Trainee Lawyer</strong> — Adnan Al-Zahrani & Associates (2017–2020) · legal research and pleadings.<br><br><strong>Legal Assistant</strong> — Legal Affairs and Quality Unit, Mecca (2016–2017) · regulatory advisory.</p>
+    <p class="item-desc lang-ar"><strong>محامية</strong> — مكتب آفاق العدالة للمحاماة (2020–2022) · قضايا التقاضي المدني والتجاري.<br><br><strong>محامية متدربة</strong> — مكتب عدنان الزهراني وشركاه (2017–2020) · البحث القانوني وإعداد المذكرات.<br><br><strong>مساعدة قانونية</strong> — وحدة الشؤون القانونية والجودة، مكة المكرمة (2016–2017) · الاستشارات النظامية والرقابية.</p>
+  </div>
+  <div class="item-block">
+    <div class="item-header">
+      <span class="item-title lang-en">Founder — Deserved Trust (Legal Technology Startup)</span>
+      <span class="item-title lang-ar">مؤسسة — ثقة مستحقة (شركة تقنية قانونية ناشئة)</span>
+      <span class="item-date">2016</span>
+    </div>
+    <p class="item-desc lang-en">Winner, Wadi Makkah Entrepreneurship Competition (SAR 40,000). Selected for Flat6Labs Jeddah accelerator (SAR 70,000 seed funding).</p>
+    <p class="item-desc lang-ar">الفائزة بمسابقة وادي مكة للريادة (40,000 ريال). تأهلت لمسرّع Flat6Labs بجدة (تمويل أولي 70,000 ريال).</p>
+  </div>
+  <div class="item-block">
+    <div class="item-header"><span class="item-title lang-en">Professional Affiliations & Training</span><span class="item-title lang-ar">الانتماءات والتدريب المهني</span></div>
+    <p class="item-desc lang-en">
+      <strong>Oxford Law and Technology Education Programme (OLTEP)</strong> · University of Oxford · 2026<br>
+      <strong>Administrative Volunteer</strong> · Saudi Society for Scientific Research & Innovation · 2022 — supported founding efforts and strategic planning<br>
+      <strong>Official Arbitrator</strong> · Arab Regional Arbitration Competition (Moot Court) · 2024, 2025<br>
+      <strong>Supervising Faculty</strong> · Arab Regional Arbitration Competition · 2023 — team achieved Top Ten; members received scholarships and employment offers<br>
+      <strong>Member</strong> · Saudi Philosophical Society · 2025 – Present
+    </p>
+    <p class="item-desc lang-ar">
+      <strong>برنامج أكسفورد للقانون والتقنية (OLTEP)</strong> · جامعة أكسفورد · 2026<br>
+      <strong>متطوعة إدارية</strong> · الجمعية السعودية للبحث العلمي والابتكار · 2022 — دعم الجهود التأسيسية والخطط الاستراتيجية<br>
+      <strong>محكّمة رسمية</strong> · مسابقة المحاكم الصورية للتحكيم بالمنطقة العربية · 2024، 2025<br>
+      <strong>هيئة تدريس مشرفة</strong> · مسابقة المحاكم الصورية للتحكيم بالمنطقة العربية · 2023 — حقق الفريق المركز العاشر؛ وحصل أعضاؤه على منح دراسية وعروض عمل<br>
+      <strong>عضو</strong> · الجمعية الفلسفية السعودية · 2025 – حتى الآن
+    </p>
+  </div>
+</div>
+</div>
+
+<!-- 9 AWARDS -->
+<div id="w-awards" class="section-wrap">
+<div class="card">
+  <h2 class="section-title"><span class="title-icon"><i data-lucide="award" size="17"></i></span><span class="lang-en">Awards & Recognition</span><span class="lang-ar">الجوائز والتكريم</span></h2>
+  <div class="award-item">
+    <div class="award-icon"><i data-lucide="trophy" size="17"></i></div>
+    <div>
+      <div class="award-title lang-en">First Place — Creativity & Entrepreneurship Competition, Wadi Makkah (2016)</div>
+      <div class="award-title lang-ar">المركز الأول — مسابقة الإبداع والريادة، وادي مكة (2016)</div>
+      <div class="award-desc lang-en">SAR 40,000 · Flat6Labs Jeddah · SAR 70,000 seed funding</div>
+      <div class="award-desc lang-ar">40,000 ريال · مسرّع Flat6Labs جدة · تمويل أولي 70,000 ريال</div>
+    </div>
+  </div>
+  <div class="award-item">
+    <div class="award-icon"><i data-lucide="star" size="17"></i></div>
+    <div>
+      <div class="award-title lang-en">Top 5 Teams — Fintech Hackathon for Savings (2022)</div>
+      <div class="award-title lang-ar">ضمن أفضل 5 فرق — هاكاثون المدخرات للتقنية المالية (2022)</div>
+      <div class="award-desc lang-en">SAR 30,000 award</div>
+      <div class="award-desc lang-ar">جائزة 30,000 ريال</div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+
+<script>
+lucide.createIcons();
+
+function toggleLang() {
+  const b = document.body;
+  if (b.getAttribute('lang') === 'en') { b.setAttribute('lang','ar'); b.setAttribute('dir','rtl'); }
+  else { b.setAttribute('lang','en'); b.setAttribute('dir','ltr'); }
+}
+
+function s(e, id) {
+  e.preventDefault();
+  const el = document.getElementById(id);
+  const top = el.getBoundingClientRect().top + window.scrollY - 72;
+  window.scrollTo({ top, behavior:'smooth' });
+}
+
+const wraps = document.querySelectorAll('.section-wrap');
+const links = document.querySelectorAll('.topbar a');
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute('id');
+      links.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === `#${id}`) l.classList.add('active');
+      });
+    }
+  });
+}, { rootMargin:'-20% 0px -60% 0px', threshold:0 });
+
+wraps.forEach(w => obs.observe(w));
+</script>
+</body>
+</html>
